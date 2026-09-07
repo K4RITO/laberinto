@@ -39,7 +39,7 @@ def tamanio(pila):
     """devuelve el numero de elementos en la pila."""
     return pila.tamanio
 
-def barrido(p):
+def barrido_pila(p):
     """muestra el contenido de la pila sin perder los datos"""
     paux = pila()
 

@@ -47,7 +47,7 @@ def mover_al_final(cola):
     arribo(cola, dato)
     return dato
 
-def barrido(c):
+def barrido_cola(c):
     """muestra el contenido de una cola sin perder datos."""
     cola_aux = cola()
     while(not cola_vacia(c)):
