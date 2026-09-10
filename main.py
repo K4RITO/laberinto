@@ -1,5 +1,4 @@
 import time
-from utils import limpiar
 
 # Laberintos
 
@@ -214,7 +213,7 @@ def backtrack(lab: list, pos: tuple, primero=True):
     
     if (lab[pos[0]][pos[1]] != 4): lab[pos[0]][pos[1]] = 2
 
-    limpiar()
+
     mostrar_laberinto(lab)
         
     time.sleep(0.05)
@@ -239,4 +238,4 @@ def backtrack(lab: list, pos: tuple, primero=True):
         print()
         return backtrack(lab, recorrido.pop())
 
-backtrack(lab=laberinto_sin_salida, pos=[0, 1])
+backtrack(lab=laberinto2, pos=[0, 1])
