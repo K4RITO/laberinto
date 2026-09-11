@@ -125,9 +125,38 @@ AZUL = "\033[94m"
 RESET = "\033[0m"
 MAGENTA = '\033[35m'
 
+# Nuevo soporte opcional de canvas, no rompe el uso de consola, pero permite visualizar el laberinto en una ventana de tkinter.
+canvas = None
+tam_celda = 25
+COLORES_CANVAS = {
+    0: "green",      # Camino libre
+    1: "red",        # Pared
+    2: "yellow",     # Camino activo
+    3: "lightgray",  # Camino sin salida
+    4: "blue",       # Casilla de inicio / origen
+    5: "blue"        # Casilla de salida / meta
+}
+
+def configurar_canvas(nuevo_canvas, celda=25):
+    "Le dice al módulo que se va a usar canvas y lo configura con el tamaño del laberinto."
+    global canvas, tam_celda
+    canvas = nuevo_canvas
+    tam_celda = celda
+#-----------------------------------------------------------------------------------------------
+
 # funcion para mostrar el laberinto con colores distinguidos por consola
 
 def mostrar_laberinto(lab):
+    #Se chequea si se ha configurado un canvas para dibujar el laberinto en una ventana de tkinter.
+    if canvas is not None:
+        canvas.delete("all")                                   #Borra el contenido previo del canvas.
+        for i, fila in enumerate(lab):
+            for j, valor in enumerate(fila):
+                x0, y0 = j * tam_celda, i * tam_celda          #Calcula las coordenadas de la esquina superior izquierda del rectángulo.
+                x1, y1 = x0 + tam_celda, y0 + tam_celda        #Calcula las coordenadas de la esquina inferior derecha del rectángulo.
+                canvas.create_rectangle(x0, y0, x1, y1, fill=COLORES_CANVAS.get(valor, "white"), outline="black")   #Dibuja un rectángulo en el canvas con el color correspondiente al valor de la celda.
+        canvas.update()  #Actualiza el canvas para reflejar los cambios realizados.
+        return
     """
     Recibe el laberinto por parametro e imprime cada uno de sus caracteres con el color especifico.
     """
@@ -205,11 +234,11 @@ def backtrack(lab: list, pos: tuple, primero=True):
 
     if (lab[pos[0]][pos[1]] == 4 and not primero):
         print("No hay salida")
-        return
+        return False
 
     if (lab[pos[0]][pos[1]] == 5):
         print("salio")
-        return
+        return True
     
     if (lab[pos[0]][pos[1]] != 4): lab[pos[0]][pos[1]] = 2
 
@@ -238,4 +267,7 @@ def backtrack(lab: list, pos: tuple, primero=True):
         print()
         return backtrack(lab, recorrido.pop())
 
-backtrack(lab=laberinto2, pos=[0, 1])
+if __name__ == "__main__":
+    # Solo se ejecuta si el archivo es el principal, no si se importa como módulo.
+    # Podes cambiar el nombre del laberinto y la posición inicial para probar otros escenarios.
+    backtrack(lab=laberinto, pos=[0, 1])
