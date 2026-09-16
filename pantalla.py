@@ -3,7 +3,7 @@ from menu import menu_principal
 
 ventana = tk.Tk()
 ventana.title("Laberinto")
-ventana.geometry("800x750")
+ventana.geometry("1080x720")
 
 frame = tk.Frame(ventana)
 frame.pack(expand=True)
