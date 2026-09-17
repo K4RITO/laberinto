@@ -42,7 +42,7 @@ laberinto = [
     [1,1,0,0,0,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,0,0,0,1,1],
     [1,1,1,1,0,1,1,1,0,0,0,0,0,1,1,0,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
     [1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 
 laberinto2  = [
@@ -216,15 +216,6 @@ laberinto_sin_salida  = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
-
-# colores para los prints
-ROJO = "\033[91m"
-VERDE = "\033[92m"
-AMARILLO = "\033[93m"
-AZUL = "\033[94m"
-RESET = "\033[0m"
-MAGENTA = '\033[35m'
-
 # Nuevo soporte opcional de canvas, no rompe el uso de consola, pero permite visualizar el laberinto en una ventana de tkinter.
 canvas = None
 tam_celda = 12
@@ -260,29 +251,7 @@ def mostrar_laberinto(lab):
     """
     Recibe el laberinto por parametro e imprime cada uno de sus caracteres con el color especifico.
     """
-    for fila in lab:
-        for numero in fila:
-
-            if numero == 0:
-                print(f"{VERDE}0{RESET}", end=" ")
-
-            elif numero == 1:
-                print(f"{ROJO}1{RESET}", end=" ")
-
-            elif numero == 2:
-                print(f"{AMARILLO}2{RESET}", end=" ")
-
-            elif numero == 3:
-                print(f"{MAGENTA}3{RESET}", end=" ")
-
-            elif numero == 4:
-                print(f"{AZUL}4{RESET}", end=" ")
-
-            elif numero == 5:
-                print(f"{AZUL}5{RESET}", end=" ")
-
-        print()
-
+    
 # Lista donde guardaremos los movimientos del algoritmo.
 recorrido = []
 
@@ -345,7 +314,7 @@ def backtrack(lab: list, pos: tuple, primero=True):
 
     mostrar_laberinto(lab)
 
-    time.sleep(0.05)
+    time.sleep(0.001)
     if (lab[pos[0]][pos[1] + 1] != 1 and lab[pos[0]][pos[1] + 1] not in [2, 3]):
         recorrido.append([pos[0], pos[1]])
         return backtrack(lab, [pos[0], pos[1] + 1], primero=False)
@@ -368,6 +337,5 @@ def backtrack(lab: list, pos: tuple, primero=True):
         return backtrack(lab, recorrido.pop())
 
 if __name__ == "__main__":
-    # Solo se ejecuta si el archivo es el principal, no si se importa como módulo.
-    # Podes cambiar el nombre del laberinto y la posición inicial para probar otros escenarios.
+    # Solo se ejecuta si el archivo es el principal por motivos de testing
     backtrack(lab=laberinto, pos=[0, 1])
