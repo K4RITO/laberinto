@@ -238,7 +238,10 @@ def configurar_canvas(nuevo_canvas, celda=12):
 # funcion para mostrar el laberinto con colores distinguidos por consola
 
 def mostrar_laberinto(lab):
-    #Se chequea si se ha configurado un canvas para dibujar el laberinto en una ventana de tkinter.
+    """
+    Dibuja el laberinto en la interfaz gráfica (Tkinter Canvas).
+    Nota: La impresión por consola ha sido sustituida completamente por el Canvas.
+    """
     if canvas is not None:
         canvas.delete("all")                                   #Borra el contenido previo del canvas.
         for i, fila in enumerate(lab):
@@ -248,10 +251,7 @@ def mostrar_laberinto(lab):
                 canvas.create_rectangle(x0, y0, x1, y1, fill=COLORES_CANVAS.get(valor, "white"), outline="black")   #Dibuja un rectángulo en el canvas con el color correspondiente al valor de la celda.
         canvas.update()  #Actualiza el canvas para reflejar los cambios realizados.
         return
-    """
-    Recibe el laberinto por parametro e imprime cada uno de sus caracteres con el color especifico.
-    """
-    
+
 # Lista donde guardaremos los movimientos del algoritmo.
 recorrido = []
 
